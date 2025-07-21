@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.student.mapper.StudentMapper">
+
+    <!-- 1. 전체 조회 -->
+    <select id="selectAll" resultType="Student">
+        SELECT * FROM student ORDER BY no
+    </select>
+
+    <!-- 2. 총점 내림차순 정렬 조회 -->
+    <select id="selectAllByTotalDesc" resultType="Student">
+        SELECT *, (kor + eng + mat) AS total
+        FROM student
+        ORDER BY total DESC
+    </select>
+
+    <!-- 3. 단일 조회 -->
+    <select id="selectByNo" resultType="Student">
+        SELECT * FROM student WHERE no = #{no}
+    </select>
+
+    <!-- 4. 등록 -->
+    <insert id="insert" parameterType="Student">
+        INSERT INTO student(no, name, kor, eng, mat)
+        VALUES(#{no}, #{name}, #{kor}, #{eng}, #{mat})
+    </insert>
+
+    <!-- 5. 수정 -->
+    <update id="update" parameterType="Student">
+        UPDATE student
+        SET kor = #{kor}, eng = #{eng}, mat = #{mat}
+        WHERE no = #{no}
+    </update>
+
+    <!-- 6. 삭제 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM student WHERE no = #{no}
+    </delete>
+
+    <!-- 7. 평균 계산용 통계 -->
+    <select id="selectAverage" resultType="map">
+        SELECT
+        AVG(kor) AS avgKor,
+        AVG(eng) AS avgEng,
+        AVG(mat) AS avgMat,
+        AVG((kor + eng + mat)/3.0) AS avgAll
+        FROM student
+    </select>
+
+</mapper>

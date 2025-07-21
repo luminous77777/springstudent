@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: student
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.student.domain
+  configuration:
+    map-underscore-to-camel-case: true
